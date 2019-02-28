@@ -16,6 +16,13 @@ class Photo(object):
 
 class Slide(object):
 
-    def __init__(self, ids, tags):
-        self.ids = ids  # list
-        self.tags = tags  # set
+    def __init__(self, images):
+        self.ids = [x.id for x in images]
+        self.tags = set()
+        for image in images:
+            for tag in image.tags:
+                self.tags.add(tag)
+
+    # def __init__(self, ids, tags):
+    #     self.ids = ids  # list
+    #     self.tags = tags  # set
