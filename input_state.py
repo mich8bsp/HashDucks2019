@@ -1,0 +1,2 @@
+class InputState(object):
+    pass
