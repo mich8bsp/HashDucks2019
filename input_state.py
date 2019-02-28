@@ -1,2 +1,4 @@
 class InputState(object):
-    pass
+
+    def __init__(self, images):
+        self.images = images
