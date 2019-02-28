@@ -41,5 +41,11 @@ def run_logic(input_state):
             output_state = OutputState([Slide([images[0], images[1]])])
     return output_state
 
-def distinct_vertical_tags(image1, image2):
-    pass
+
+def distinct_vertical_tags(photo1, photo2):
+    if (photo1.orientation == Orientation.VERTICAL and
+            photo2.orientation == Orientation.VERTICAL):
+        first_tags = set(photo1.tags)
+        distinct_tags = [second_tag for second_tag in photo2.tags if second_tag not in first_tags]
+        print(len(distinct_tags))
+        return len(distinct_tags)
