@@ -1,6 +1,6 @@
 import os
 
-from entities import Photo
+from entities import Photo, Orientation
 from output_state import OutputState
 from input_state import InputState
 import time
@@ -23,10 +23,10 @@ def build_input_state(input_lines):
 
 def build_photo(id, photo_line):
     params = photo_line.split()
-    orientation = params[0]
+    orientation = Orientation.HORIZONTAL if params[0] == "H" else Orientation.VERTICAL
     tags_num = int(params[1])
     tags = set([params[i+2] for i in range(tags_num)])
-    Photo(id, orientation, tags)
+    return Photo(id, orientation, tags)
 
 
 
@@ -39,4 +39,6 @@ def write_output_to_file(output_state):
 
 def get_out_lines(output_state):
     # type: (OutputState) -> [str]
-    return ["abc"]
+    slides = output_state.slides
+    num_of_slides = len(slides)
+    return [str(num_of_slides)] + [" ".join([str(y) for y in x.ids]) for x in slides]
