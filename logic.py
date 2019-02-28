@@ -40,3 +40,6 @@ def run_logic(input_state):
         else:
             output_state = OutputState([images[0].id], images[1].id)
     return output_state
+
+def distinct_vertical_tags(image1, image2):
+    pass
