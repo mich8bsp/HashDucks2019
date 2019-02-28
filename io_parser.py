@@ -1,6 +1,6 @@
 import os
 
-from entities import Image
+from entities import Photo
 from output_state import OutputState
 from input_state import InputState
 import time
@@ -26,7 +26,7 @@ def build_photo(id, photo_line):
     orientation = params[0]
     tags_num = int(params[1])
     tags = set([params[i+2] for i in range(tags_num)])
-    Image(id, orientation, tags)
+    Photo(id, orientation, tags)
 
 
 
