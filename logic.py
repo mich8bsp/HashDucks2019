@@ -19,7 +19,7 @@ def calc_pair_score(slide1, slide2):
 def calc_score(slides):
     score = 0
     for index, slide in enumerate(slides):
-        if slides[index + 1] is not None:
+        if index + 1 >= len(slides) is not None:
             score += calc_pair_score(slide, slides[index + 1])
 
     return score
