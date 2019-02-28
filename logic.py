@@ -49,3 +49,17 @@ def distinct_vertical_tags(photo1, photo2):
         distinct_tags = [second_tag for second_tag in photo2.tags if second_tag not in first_tags]
         print(len(distinct_tags))
         return len(distinct_tags)
+    return -1
+
+
+def arrange_vertical_photos(photos):
+    matchingPhotos = []
+    for photo in photos:
+        bestMatchingPhoto = {}
+        max = -1
+        for otherPhoto in photos:
+            max = max(max, distinct_vertical_tags(photo.tags, otherPhoto.tags))
+            bestMatchingPhoto = otherPhoto
+        if max != -1:
+            matchingPhotos[photo.id] = bestMatchingPhoto
+    return matchingPhotos.sort(reverse=True)
