@@ -1,5 +1,6 @@
 import os
 
+from entities import Image
 from output_state import OutputState
 from input_state import InputState
 import time
@@ -22,9 +23,9 @@ def build_input_state(input_lines):
 
 def build_photo(id, photo_line):
     params = photo_line.split()
-    orientation = params(0)
-    tags_num = int(params(1))
-    tags = set([params(i+2) for i in range(tags_num)])
+    orientation = params[0]
+    tags_num = int(params[1])
+    tags = set([params[i+2] for i in range(tags_num)])
     Image(id, orientation, tags)
 
 
