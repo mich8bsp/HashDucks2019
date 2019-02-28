@@ -14,6 +14,7 @@ class Photo(object):
         self.tags = tags
         self.numTags = len(tags)
 
+
 class Slide(object):
 
     def __init__(self, images):
