@@ -12,6 +12,7 @@ class Photo(object):
         self.id = id
         self.orientation = orientation
         self.tags = tags
+        self.should_check = True
         self.numTags = len(tags)
 
 class Slide(object):

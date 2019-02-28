@@ -42,24 +42,22 @@ def run_logic(input_state):
     return output_state
 
 
-def distinct_vertical_tags(photo1, photo2):
-    if (photo1.orientation == Orientation.VERTICAL and
-            photo2.orientation == Orientation.VERTICAL):
-        first_tags = set(photo1.tags)
-        distinct_tags = [second_tag for second_tag in photo2.tags if second_tag not in first_tags]
-        print(len(distinct_tags))
-        return len(distinct_tags)
-    return -1
-
-
-def arrange_vertical_photos(photos):
-    matchingPhotos = []
+def arrange_vertical_images(photos):
+    matching_photos = []
     for photo in photos:
-        bestMatchingPhoto = {}
-        max = -1
-        for otherPhoto in photos:
-            max = max(max, distinct_vertical_tags(photo.tags, otherPhoto.tags))
-            bestMatchingPhoto = otherPhoto
-        if max != -1:
-            matchingPhotos[photo.id] = bestMatchingPhoto
-    return matchingPhotos.sort(reverse=True)
+        if photo.should_check:
+            remaining_photos = photos.copy()
+            best_matching_photo = {}
+            max_match = -1
+            for other_photo in remaining_photos:
+                if other_photo.should_check:
+                    if photo != other_photo:
+                        new_match = len(photo.tags.union(other_photo.tags))
+                        if new_match > max_match:
+                            best_matching_photo = other_photo
+                            max_match = new_match
+            if max_match != -1:
+                matching_photos.append(Slide([photo, best_matching_photo]))
+                best_matching_photo.should_check = False
+                photo.should_check = False
+    return matching_photos
