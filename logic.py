@@ -40,3 +40,6 @@ def run_logic(input_state):
         else:
             output_state = OutputState([Slide([images[0], images[1]])])
     return output_state
+
+def distinct_vertical_tags(image1, image2):
+    pass
