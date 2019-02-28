@@ -7,7 +7,7 @@ import knapsack
 def calc_pair_score(slide1, slide2):
     intersections = len(slide1.tags.intersection(slide2.tags))
 
-    if intersections > slide1.len():
+    if intersections > len(slide1):
         if len(slide1.tags) > len(slide2.tags):
             return len(slide2.tags)
         return len(slide1.tags)
