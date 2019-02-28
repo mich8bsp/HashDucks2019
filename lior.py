@@ -2,7 +2,7 @@ import time
 
 import io_parser
 from entities import *
-from logic import validate, arrange_vertical_images
+from logic import validate, arrange_vertical_images, InvalidSolution
 from output_state import OutputState
 
 
@@ -12,6 +12,7 @@ def match_verticals(slides_by_size, images_by_size):
         for image in images_by_size[size]:
             if waiting_vertical is not None:
                 add_to_mapping(Slide([image, waiting_vertical]), slides_by_size)
+                waiting_vertical = None
             else:
                 waiting_vertical = image
 
@@ -30,16 +31,13 @@ def run_logic(input_state):
             add_to_mapping(image, images_by_size)
             verticals += [image]
 
-    more_slides = arrange_vertical_images(verticals)
-
-    # match_verticals(slides_by_size, images_by_size)
+    match_verticals(slides_by_size, images_by_size)
 
     result = []
 
     for slide_size in slides_by_size.keys():
         result += slides_by_size[slide_size]
-    for slide in more_slides:
-        result += [slide]
+    # result += arrange_vertical_images(verticals)
 
     return OutputState(result)
 
@@ -58,12 +56,17 @@ if __name__ == "__main__":
     input = io_parser.parse_input_file(file_e)
     output = run_logic(input)
     end_process_time = time.clock()
-    is_valid = validate(input, output)
+    try:
+        is_valid = validate(input, output)
+    except InvalidSolution as e:
+        print(e.reason)
+    else:
+        is_vaild = False
     end_validation_time = time.clock()
     if not is_valid:
         print("invalid output!")
     else:
         print("valid output!")
-        # print(output)
+    print(output)
     print("processing time: " + str(end_process_time - start_time))
     print("validation time: " + str(end_validation_time - end_process_time))

@@ -44,10 +44,9 @@ def arrange_vertical_images(photos):
     matching_photos = []
     for photo in photos:
         if photo.should_check:
-            remaining_photos = photos.copy()
             best_matching_photo = {}
             max_match = -1
-            for other_photo in remaining_photos:
+            for other_photo in photos:
                 if other_photo.should_check:
                     if photo != other_photo:
                         new_match = len(photo.tags.union(other_photo.tags))
