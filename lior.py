@@ -2,7 +2,7 @@ import time
 
 import io_parser
 from entities import *
-from logic import validate
+from logic import validate, arrange_vertical_images
 from output_state import OutputState
 
 
@@ -19,6 +19,7 @@ def match_verticals(slides_by_size, images_by_size):
 def run_logic(input_state):
     slides_by_size = {}
     images_by_size = {}
+    verticals = []
 
     images = input_state.images
 
@@ -27,13 +28,18 @@ def run_logic(input_state):
             add_to_mapping(Slide([image]), slides_by_size)
         else:
             add_to_mapping(image, images_by_size)
+            verticals += [image]
 
-    match_verticals(slides_by_size, images_by_size)
+    more_slides = arrange_vertical_images(verticals)
+
+    # match_verticals(slides_by_size, images_by_size)
 
     result = []
 
     for slide_size in slides_by_size.keys():
         result += slides_by_size[slide_size]
+    for slide in more_slides:
+        result += [slide]
 
     return OutputState(result)
 
@@ -46,8 +52,10 @@ if __name__ == "__main__":
     file_a = "a_example.txt"
     file_b = "b_lovely_landscapes.txt"
     file_c = "c_memorable_moments.txt"
+    file_d = "d_pet_pictures.txt"
+    file_e = "e_shiny_selfies.txt"
     start_time = time.clock()
-    input = io_parser.parse_input_file(file_c)
+    input = io_parser.parse_input_file(file_e)
     output = run_logic(input)
     end_process_time = time.clock()
     is_valid = validate(input, output)

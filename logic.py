@@ -40,6 +40,27 @@ def run_logic(input_state):
     return output_state
 
 
+def arrange_vertical_images(photos):
+    matching_photos = []
+    for photo in photos:
+        if photo.should_check:
+            remaining_photos = photos.copy()
+            best_matching_photo = {}
+            max_match = -1
+            for other_photo in remaining_photos:
+                if other_photo.should_check:
+                    if photo != other_photo:
+                        new_match = len(photo.tags.union(other_photo.tags))
+                        if new_match > max_match:
+                            best_matching_photo = other_photo
+                            max_match = new_match
+            if max_match != -1:
+                matching_photos.append(Slide([photo, best_matching_photo]))
+                best_matching_photo.should_check = False
+                photo.should_check = False
+    return matching_photos
+
+
 def distinct_vertical_tags(image1, image2):
     pass
 
